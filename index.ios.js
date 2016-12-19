@@ -3,26 +3,33 @@
 import React, {Component } from 'react'
 import {View,Text,AppRegistry,StyleSheet} from 'react-native'
 var DayItem = require('./src/day-items')
+var Moment = require('moment');
 // var AppRegistry = React.AppRegistry;
 // var Text = React.Text;
 // var View = React.View;
-const days = ['Sunday','Monday','Teusday','Wednesday','Thursday','Friday','Saturday']
+// const days = ['Sunday','Monday','Teusday','Wednesday','Thursday','Friday','Saturday']
 //creat react Component
 var weekDays = React.createClass({
   render:function() {
     return(
         <View style = {styles.container}>
 
-          <Text style = {styles.day}>Days of the week</Text>
+
           {this.days()}
 
         </View>
     )
   },
   days:function() {
-    return days.map(function(x) {
-      return <DayItem day = {x}/>
-    })
+    var daysItem = [];
+    for (var i = 0; i < 7; i++) {
+      var day = Moment().add(i,'days').format('dddd')
+      daysItem.push(<DayItem day = {day} daysUntil={i}/>)
+    }
+    return daysItem
+    // return days.map(function(x) {
+    //   return <DayItem day = {x}/>
+    // })
   }
 });
 //style react Component
@@ -32,10 +39,6 @@ const styles = StyleSheet.create({
     // flexDirection:'row'defailt is column,
     justifyContent:'center',//horizontal alignment flex-end start
     alignItems:'center' //vertical alignment
-  },
-  day:{
-    fontSize:18,
-    color:'#00FF'
   }
 });
 
